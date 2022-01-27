@@ -11,6 +11,8 @@ security:
     providers:
         user_provider:
             id: user.provider
+        uv_api_credentials:
+            id: Webkul\UVDesk\ApiBundle\Providers\ApiCredentials
     encoders:
         Webkul\UVDesk\CoreFrameworkBundle\Entity\User: auto
     firewalls:
@@ -40,6 +42,13 @@ security:
             logout:
                 path: helpdesk_customer_logout
                 target: helpdesk_customer_login
+        uvdesk_api:
+            pattern: /api
+            anonymous: true
+            provider: uv_api_credentials
+            guard:
+                authenticators:
+                    Webkul\UVDesk\ApiBundle\Security\Guards\APIGuard: Webkul\UVDesk\ApiBundle\Security\Guards\APIGuard
     access_control:
         -
             path: /%uvdesk_site_path.member_prefix%/login
