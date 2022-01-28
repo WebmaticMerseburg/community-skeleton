@@ -209,7 +209,7 @@ a:active {
   font-size: 13px;
   padding: 6px 10px;
   color: #FFFFFF;
-  background-color: #7C70F4;
+  background-color: #ffc730;
   display: inline-block;
   text-transform: uppercase;
   border-radius: 3px;
@@ -225,7 +225,7 @@ a:active {
   font-size: 15px;
   padding: 10px 10px;
   color: #FFFFFF;
-  background-color: #7C70F4;
+  background-color: #ffc730;
   display: inline-block;
   text-transform: uppercase;
   border-radius: 3px;
@@ -241,7 +241,7 @@ a:active {
   font-size: 17px;
   padding: 12px 10px;
   color: #FFFFFF;
-  background-color: #7C70F4;
+  background-color: #ffc730;
   display: inline-block;
   text-transform: uppercase;
   border-radius: 3px;
@@ -511,7 +511,7 @@ input[type="radio"][disabled="disabled"] + .uv-radio-view {
 }
 .uv-select:focus,
 .uv-field:focus {
-  border: solid 1px #7C70F4;
+  border: solid 1px #ffc730;
 }
 .uv-field-error,
 .uv-field-error:focus {
@@ -669,7 +669,7 @@ input[type="radio"][disabled="disabled"] + .uv-radio-view {
   vertical-align: middle;
 }
 .uv-search-inline:focus {
-  border-color: #7C70F4;
+  border-color: #ffc730;
   background-position: -7px -58px;
 }
 .uv-search-inline-full {
@@ -853,7 +853,7 @@ span.uv-sorting:hover.ascend {
   right: 0px;
 }
 .uv-dropdown .uv-dropdown-btn-active {
-  border: solid 1px #7C70F4;
+  border: solid 1px #ffc730;
 }
 .uv-loader {
   position: relative;
@@ -868,7 +868,7 @@ span.uv-sorting:hover.ascend {
 .uv-loader span:before {
   width: 15px;
   height: 15px;
-  background: #7C70F4;
+  background: #ffc730;
   display: block;
   border-radius: 50%;
   position: absolute;
@@ -880,7 +880,7 @@ span.uv-sorting:hover.ascend {
 .uv-loader span:after {
   width: 15px;
   height: 15px;
-  background: #7C70F4;
+  background: #ffc730;
   display: block;
   border-radius: 50%;
   position: absolute;
@@ -989,9 +989,9 @@ span.uv-sorting:hover.ascend {
   line-height: 0;
 }
 .uv-pagination a:hover {
-  background-color: #7C70F4;
+  background-color: #ffc730;
   color: #FFFFFF;
-  border: solid 1px #7C70F4;
+  border: solid 1px #ffc730;
 }
 .uv-pagination .uv-pagination-previous {
   padding: 11px 14px 11px 12px;
@@ -1498,7 +1498,7 @@ p {
   font-size: 0px;
 }
 .uv-header .uv-header-lt {
-  width: 30%;
+  width: 40%;
   display: inline-block;
   vertical-align: middle;
   height: 70px;
@@ -1515,7 +1515,7 @@ p {
 }
 .uv-header .uv-header-rt {
   text-align: right;
-  width: 70%;
+  width: 60%;
   display: inline-block;
   vertical-align: middle;
 }
@@ -1558,7 +1558,7 @@ p {
   margin-top: 25px;
 }
 .uv-header .uv-header-rt .uv-hamburger svg path {
-  fill: #7C70F4;
+  fill: #ffc730;
 }
 .uv-header .uv-header-rt .uv-profile-avatar {
   display: inline-block;
@@ -1601,7 +1601,7 @@ p {
 }
 .uv-hero {
   width: 100%;
-  background-color: #7C70F4;
+  background-color: #ffc730;
 }
 .uv-hero article {
   max-width: 100%;
@@ -1642,7 +1642,7 @@ p {
   text-align: center;
 }
 .uv-kb-layout-folder .uv-kb-folder {
-  border: solid 1px #7C70F4;
+  border: solid 1px #ffc730;
   border-radius: 3px;
   display: inline-block;
   font-size: 0;
@@ -1695,7 +1695,7 @@ p {
   width: 300px;
   margin: 15px;
   border: solid 1px #D3D3D3;
-  border-bottom: solid 3px #7C70F4;
+  border-bottom: solid 3px #ffc730;
   border-radius: 3px;
   display: inline-block;
   vertical-align: top;
@@ -2047,11 +2047,11 @@ p {
 .uv-nav-tab ul.uv-nav-tab-label li a:hover {
   text-decoration: none;
   color: #333333;
-  border-bottom: solid 3px #7C70F4;
+  border-bottom: solid 3px #ffc730;
 }
 .uv-nav-tab ul.uv-nav-tab-label li .uv-nav-tab-active {
   color: #333333;
-  border-bottom: solid 3px #7C70F4;
+  border-bottom: solid 3px #ffc730;
 }
 .uv-nav-tab ul.uv-nav-tab-label li a:after {
   display: none;
@@ -2107,7 +2107,7 @@ p {
 }
 .uv-paper-article .uv-paper-section .uv-folder-title:after {
   font-size: 13px;
-  background-color: #7C70F4;
+  background-color: #ffc730;
   color: #FFFFFF;
   padding: 2px 5px;
   border-radius: 3px;
@@ -2388,7 +2388,7 @@ p {
   margin: 20px 0px;
 }
 .uv-brand {
-  color: #7C70F4;
+  color: #ffc730;
 }
 .uv-kudo {
   position: fixed;
@@ -2678,7 +2678,7 @@ p {
 .uv-ticket-view .uv-ticket-accordion .uv-ticket-count-stat {
   min-width: 40px;
   height: 40px;
-  background: #7C70F4;
+  background: #ffc730;
   color: #FFFFFF;
   font-size: 17px;
   position: absolute;
