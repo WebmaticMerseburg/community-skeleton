@@ -1,0 +1,3 @@
+
+webmatic_util:
+    resource: "@WebmaticUtilBundle/Resources/config/routes.yaml"

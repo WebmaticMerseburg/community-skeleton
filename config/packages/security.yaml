@@ -16,6 +16,38 @@ security:
     encoders:
         Webkul\UVDesk\CoreFrameworkBundle\Entity\User: auto
     firewalls:
+        test:
+            anonymous: true
+            form_login: false
+            logout:
+                invalidate_session: true
+                path: /logout
+                target: '/sso/logout-user/%sso_service%'
+            pattern: ^/
+            provider: webmatic_kunde_chain
+            sso:
+                always_use_default_target_path: true
+                default_target_path: /
+                check_path: /otp/validate # Same as in app/config/routing.yml
+                require_previous_session: false
+                sso_failure_path: '%idp_login_url%' # Can also be as an absolute path to service provider
+                sso_scheme: '%sso_scheme%' # Required
+                sso_host: '%sso_host%' # Required
+                sso_path: '%sso_path%' # SSO endpoint on IdP.
+                sso_login_required: 1 # Optional
+                sso_login_required_parameter: login_required # Optional
+                sso_otp_host: '%sso_otp_host%' # Optional
+                sso_otp_scheme: '%sso_otp_scheme%' # Optional
+                sso_service: '%sso_service%' # Consumer name
+                sso_service_extra: null            # Default service extra parameters. Optional.
+                sso_service_extra_parameter: service_extra   # Parameter name. Optional
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            switch_user:
+                role: ROLE_ADMIN
         back_support:
             pattern: /%uvdesk_site_path.member_prefix%
             provider: user_provider
