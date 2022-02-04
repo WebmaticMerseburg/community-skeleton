@@ -23,12 +23,12 @@ security:
                 invalidate_session: true
                 path: /logout
                 target: '/sso/logout-user/%sso_service%'
-            pattern: ^/
+            pattern: ^/test
             provider: webmatic_kunde_chain
             sso:
                 always_use_default_target_path: true
                 default_target_path: /
-                check_path: /otp/validate # Same as in app/config/routing.yml
+                check_path: /test/otp/validate # Same as in app/config/routing.yml
                 require_previous_session: false
                 sso_failure_path: '%idp_login_url%' # Can also be as an absolute path to service provider
                 sso_scheme: '%sso_scheme%' # Required
@@ -82,44 +82,15 @@ security:
                 authenticators:
                     Webkul\UVDesk\ApiBundle\Security\Guards\APIGuard: Webkul\UVDesk\ApiBundle\Security\Guards\APIGuard
     access_control:
-        -
-            path: /%uvdesk_site_path.member_prefix%/login
-            roles:
-                - IS_AUTHENTICATED_REMEMBERED
-                - IS_AUTHENTICATED_ANONYMOUSLY
-        -
-            path: /%uvdesk_site_path.member_prefix%/create-account
-            roles:
-                - IS_AUTHENTICATED_REMEMBERED
-                - IS_AUTHENTICATED_ANONYMOUSLY
-        -
-            path: /%uvdesk_site_path.member_prefix%/forgot-password
-            roles:
-                - IS_AUTHENTICATED_REMEMBERED
-                - IS_AUTHENTICATED_ANONYMOUSLY
-        -
-            path: /%uvdesk_site_path.member_prefix%/update-credentials
-            roles:
-                - IS_AUTHENTICATED_REMEMBERED
-                - IS_AUTHENTICATED_ANONYMOUSLY
-        -
-            path: /%uvdesk_site_path.member_prefix%/mailbox/listener
-            roles: IS_AUTHENTICATED_ANONYMOUSLY
-        -
-            path: /%uvdesk_site_path.member_prefix%/
-            roles: ROLE_AGENT
-        -
-            path: /%uvdesk_site_path.knowledgebase_customer_prefix%/login
-            roles: IS_AUTHENTICATED_ANONYMOUSLY
-        -
-            path: /%uvdesk_site_path.knowledgebase_customer_prefix%/create-ticket
-            roles: IS_AUTHENTICATED_ANONYMOUSLY
-        -
-            path: /%uvdesk_site_path.knowledgebase_customer_prefix%/forgot-password
-            roles: IS_AUTHENTICATED_ANONYMOUSLY
-        -
-            path: /%uvdesk_site_path.knowledgebase_customer_prefix%/update-credentials
-            roles: IS_AUTHENTICATED_ANONYMOUSLY
-        -
-            path: /%uvdesk_site_path.knowledgebase_customer_prefix%/
-            roles: ROLE_CUSTOMER
+        - { path: /%uvdesk_site_path.member_prefix%/login,                              roles: [ IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: /%uvdesk_site_path.member_prefix%/create-account,                     roles: [ IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: /%uvdesk_site_path.member_prefix%/forgot-password,                    roles: [ IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: /%uvdesk_site_path.member_prefix%/update-credentials,                 roles: [ IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: /%uvdesk_site_path.member_prefix%/mailbox/listener,                   roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: /%uvdesk_site_path.member_prefix%/,                                   roles: [ ROLE_AGENT ] }
+        - { path: /%uvdesk_site_path.knowledgebase_customer_prefix%/login,              roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: /%uvdesk_site_path.knowledgebase_customer_prefix%/create-ticket,      roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: /%uvdesk_site_path.knowledgebase_customer_prefix%/forgot-password,    roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: /%uvdesk_site_path.knowledgebase_customer_prefix%/update-credentials, roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: /%uvdesk_site_path.knowledgebase_customer_prefix%/,                   roles: [ ROLE_CUSTOMER ] }
+        - { path: /portal-rest,                                                        roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
