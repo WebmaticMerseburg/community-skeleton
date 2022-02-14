@@ -1,13 +1,9 @@
 security:
     role_hierarchy:
-        ROLE_AGENT: ROLE_AGENT
-        ROLE_ADMIN:
-            - ROLE_AGENT
-            - ROLE_ADMIN
-        ROLE_SUPER_ADMIN:
-            - ROLE_ADMIN
-            - ROLE_SUPER_ADMIN
-        ROLE_CUSTOMER: ROLE_CUSTOMER
+        ROLE_AGENT: ~
+        ROLE_ADMIN: [ ROLE_AGENT ]
+        ROLE_SUPER_ADMIN: [ ROLE_ADMIN ]
+        ROLE_CUSTOMER: ~
     providers:
         user_provider:
             id: user.provider
