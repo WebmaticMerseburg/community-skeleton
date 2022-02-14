@@ -146,6 +146,12 @@ final class SynchronizeUserEntities implements EventSubscriber
 
         $uvDeskUser = $this->createUserInstance($portalUser, $supportRole);
 
+        $uvDeskUser
+            ->setPassword($portalUser->getPassword())
+            ->setIsEnabled($portalUser->isEnabled())
+        ;
+        $this->entityManager->saveEntity($uvDeskUser);
+
         $agentInstance = $uvDeskUser->getAgentInstance();
         $customerInstance = $uvDeskUser->getCustomerInstance();
 
