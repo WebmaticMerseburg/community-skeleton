@@ -34,6 +34,20 @@ final class SynchronizeUserEntities implements EventSubscriber
         $this->userService = $userService;
     }
 
+    private function createUserInstance(PortalUser $portalUser, SupportRole $supportRole): UVDeskUser
+    {
+        return $this->userService->createUserInstance(
+            $portalUser->getEmail(),
+            $portalUser->getUsername(),
+            $supportRole,
+            [
+                'active' => $portalUser->isEnabled(),
+                'source' => 'portal',
+                'verified' => true
+            ]
+        );
+    }
+
     /**
     * {@inheritDoc}
     */
@@ -130,30 +144,14 @@ final class SynchronizeUserEntities implements EventSubscriber
             ->findOneByCode($roleName)
         ;
 
-        $uvDeskUser = $this->userService->createUserInstance(
-            $portalUser->getEmail(),
-            $portalUser->getUsername(),
-            $supportRole,
-            [
-                'active' => $portalUser->isEnabled(),
-                'source' => 'portal'
-            ]
-        );
+        $uvDeskUser = $this->createUserInstance($portalUser, $supportRole);
 
         $agentInstance = $uvDeskUser->getAgentInstance();
         $customerInstance = $uvDeskUser->getCustomerInstance();
 
         if ($isAgent) {
             if (null === $agentInstance) {
-                $this->userService->createUserInstance(
-                    $portalUser->getEmail(),
-                    $portalUser->getUsername(),
-                    $supportRole,
-                    [
-                        'active' => $portalUser->isEnabled(),
-                        'source' => 'portal'
-                    ]
-                );
+                $this->createUserInstance($portalUser, $supportRole);
             } else {
                 $agentInstance->setSupportRole($supportRole);
                 $this->entityManager->saveEntity($agentInstance);
@@ -164,15 +162,7 @@ final class SynchronizeUserEntities implements EventSubscriber
             $supportRole = $this->entityManager->getRepository(SupportRole::class)
                 ->findOneByCode('ROLE_CUSTOMER')
             ;
-            $this->userService->createUserInstance(
-                $portalUser->getEmail(),
-                $portalUser->getUsername(),
-                $supportRole,
-                [
-                    'active' => $portalUser->isEnabled(),
-                    'source' => 'portal'
-                ]
-            );
+            $this->createUserInstance($portalUser, $supportRole);
         }
 
         if (!$isAgent && null !== $agentInstance) {
