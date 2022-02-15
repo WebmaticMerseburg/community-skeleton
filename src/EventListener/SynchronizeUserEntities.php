@@ -108,10 +108,6 @@ final class SynchronizeUserEntities implements EventSubscriber
                 $this->entityManager->remove($uvDeskUser);
                 $this->entityManager->flush();
             }
-        } elseif ($entity instanceof UVDeskUser) {
-            $this->saveUVDeskUser($entity);
-        } elseif ($entity instanceof UserInstance) {
-            $this->saveUVDeskUser($entity->getUser());
         }
     }
 
