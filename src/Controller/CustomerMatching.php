@@ -70,6 +70,7 @@ class CustomerMatching extends AbstractController {
             "page" => $page,
             "pages" => $pages,
             "maxResults" => $maxResults,
+            "resultCount" => $result_count,
             "customerCount" => $wmt_customer_count
         ]);
 
