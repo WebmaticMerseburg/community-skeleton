@@ -39,21 +39,29 @@ class CustomerMatching extends AbstractController {
                             ->select("kd")
                             ->from(KundeDomain::class, "kd")
                             ->getQuery()->getResult();
+        
+        $user_domains_result = $em->createQueryBuilder()
+                            ->select("SUBSTRING(u.email, LOCATE('@',u.email) + 1) as domain")
+                            ->distinct()
+                            ->from(User::class, "u")
+                            ->leftJoin('u.userInstance', 'i')
+                            ->andwhere('i.supportRole = :roles')
+                            ->setParameter('roles', 4)
+                            ->orderBy("u.email")
+                            ->getQuery()->getScalarResult();
+
+        $user_domains = [];
+        foreach ($user_domains_result as $ud) {
+            $user_domains[] = $ud["domain"];
+        }
 
         $domain_matches = [];
         foreach ($kunde_domains as $kd) {
             $domain_matches[$kd->getKunde()->getId()] = $kd->getDomain();
+            $user_domains[] = $kd->getDomain();
         }
-
-        $user_domains = $em->createQueryBuilder()
-                        ->select("SUBSTRING(u.email, LOCATE('@',u.email) + 1) as domain")
-                        ->distinct()
-                        ->from(User::class, "u")
-                        ->leftJoin('u.userInstance', 'i')
-                        ->andwhere('i.supportRole = :roles')
-                        ->setParameter('roles', 4)
-                        ->orderBy("u.email")
-                        ->getQuery()->getScalarResult();
+        
+        $user_domains = array_unique($user_domains);
 
         return $this->render("CustomerMatching/matchWmtCustomersPreset.html.twig", [
             "customers" => $wmt_customers,

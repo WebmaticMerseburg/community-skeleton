@@ -70,17 +70,17 @@
 							<td>
 								<select class="uv-select" data-customer-id={{c.id}} id="domains_{{c.id}}">
 									
+									{% if not selected_option %}
 									<option value="">
 										{{"Assign domain"|trans}}...
 									</option>
-
-									{% set domain_found = 0 %}
-
+									{% endif %}
+									
 									{% for d in domains %}
 
-										<option value="{{d['domain']}}"
-											{% if selected_option == d['domain'] %}selected{% endif %}>
-											{{d['domain']}}
+										<option value="{{d}}"
+											{% if selected_option == d %}selected{% endif %}>
+											{{d}}
 										</option>
 
 									{% endfor %}
