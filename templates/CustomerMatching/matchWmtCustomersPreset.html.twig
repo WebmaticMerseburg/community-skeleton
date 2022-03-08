@@ -121,6 +121,9 @@
 	<script>
 
 		function resetDomain (id) {
+
+			if (!window.confirm("Ein Reset der Domain-Zuordnung entfernt die Kunden-Zuordnung bei den Nutzern ebenfalls. Fortfahren?")) return;
+
 			let select = $("select#domains_"+id);
 			var domain = select.val();
 
