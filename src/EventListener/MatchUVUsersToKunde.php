@@ -52,6 +52,7 @@ final class MatchUVUsersToKunde implements EventSubscriber
                               ->setParameter("domain", "%".$entity->getDomain()."%")
                               ->getQuery()->getResult();
 
+            $mappings = [];
             foreach ($users as $u) {
                 $mappings[] = (new UserKundeMatch())
                                 ->setUser($u)
