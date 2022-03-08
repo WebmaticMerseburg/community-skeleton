@@ -33,7 +33,8 @@ class CustomerMatching extends AbstractController {
                             ->setMaxResults($maxResults)
                             ->setFirstResult($maxResults * ($page - 1));
 
-        $wmt_customers = new Paginator($wmt_customer_query);
+        $wmt_customers = (new Paginator($wmt_customer_query))->getQuery()->getResult();
+        $result_count = count($wmt_customers);
         
         $kunde_domains = $em->createQueryBuilder()
                             ->select("kd")
