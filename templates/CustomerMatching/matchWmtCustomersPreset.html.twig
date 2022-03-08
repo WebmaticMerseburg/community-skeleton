@@ -1,0 +1,130 @@
+{% extends "@UVDeskCoreFramework//Templates//layout.html.twig" %}
+
+{% block title %}{{ 'Domain presets'|trans }}{% endblock %}
+
+{% block pageContent %}
+	<style>
+		.select2-container {
+			display: block !important;
+			width: auto !important;
+		}
+	</style>
+
+	<div class="uv-inner-section">
+		{# Append Panel Aside #}
+		{% set asideTemplate = 'Webkul\\UVDesk\\CoreFrameworkBundle\\Dashboard\\AsideTemplate' %}
+		{% set asideSidebarReference = 'Webkul\\UVDesk\\CoreFrameworkBundle\\UIComponents\\Dashboard\\Panel\\Sidebars\\Users' %}
+
+		{{ uvdesk_extensibles.getRegisteredComponent(asideTemplate).renderSidebar(asideSidebarReference) | raw }}
+		
+		<div class="uv-view {% if app.request.cookies and app.request.cookies.get('uv-asideView') %}uv-aside-view{% endif %}">
+			<h1>{{ 'Domain presets'|trans }}</h1>
+			<p>Voreinstellungen für eine Domain dienen dazu, Nutzer mit einer bestimmten Mail-Domain direkt dem richtigen Kunden zuzuordnen. 
+			Es werden neu angelegte Nutzer direkt zugeordnet. Bei Änderung der Domain des Kunden werden alle bereits zugeordneten Nutzer aktualisiert.<br>
+			Per Knopfdruck kann die Domain aus den bereits im Lexware hinterlegten Adressen oder den Adressen der Ansprechpartner ausgelesen werden. Kundenspezifische Domains sind hierbei notwendig.</p>	
+			<div class="uv-action-bar">
+				<div class="uv-action-bar-col-lt" style="width: 100%">
+					<a href="{{path('webmatic_customer_matching_preset', {page: (page-1)})}}"{% if page == 1 %} disabled="disabled" {% endif %}class="uv-btn-small" type="button" style="margin: auto .125em; width: 2.5em; text-align: center;"><<</a> 		
+					{% for i in 1..pages %}
+						<a href="{{path('webmatic_customer_matching_preset', {page: i})}}"{% if i == page %} disabled="disabled" {% endif %}class="uv-btn-small" type="button" style="margin: auto .125em; width: 2.5em; text-align: center;">{{i}}</a> 	
+					{% endfor %}
+					<a href="{{path('webmatic_customer_matching_preset', {page: (page+1)})}}"{% if page == pages %} disabled="disabled" {% endif %}class="uv-btn-small" type="button" style="margin: auto .125em; width: 2.5em; text-align: center;">>></a>
+					<!--     v   Input link for auto-assign here   -->
+					<a href="#" type="button" class="uv-btn-action" style="float: right; margin-right: 1.5em;">
+						<svg style="height: 1em; margin-right: .125em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+							<!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+							<path style="fill: white;" d="M449.9 39.96l-48.5 48.53C362.5 53.19 311.4 32 256 32C161.5 32 78.59 92.34 49.58 182.2c-5.438 16.81 3.797 34.88 20.61 40.28c16.97 5.5 34.86-3.812 40.3-20.59C130.9 138.5 189.4 96 256 96c37.96 0 73 14.18 100.2 37.8L311.1 178C295.1 194.8 306.8 223.4 330.4 224h146.9C487.7 223.7 496 215.3 496 204.9V59.04C496 34.99 466.9 22.95 449.9 39.96zM441.8 289.6c-16.94-5.438-34.88 3.812-40.3 20.59C381.1 373.5 322.6 416 256 416c-37.96 0-73-14.18-100.2-37.8L200 334C216.9 317.2 205.2 288.6 181.6 288H34.66C24.32 288.3 16 296.7 16 307.1v145.9c0 24.04 29.07 36.08 46.07 19.07l48.5-48.53C149.5 458.8 200.6 480 255.1 480c94.45 0 177.4-60.34 206.4-150.2C467.9 313 458.6 294.1 441.8 289.6z"/>
+						</svg>
+						{{ "Assign by stored mail"|trans }}
+					</a>
+				</div>
+			</div>
+			<div class="uv-table uv-list-view">
+				<table>
+					<thead>
+					<tr>
+						<th>Matchcode</th>
+						<th>Firma</th>
+						<th>Ansprechpartner</th>
+						<th>Domain</th>
+					</tr>
+					</thead>
+					<tbody>
+						{% for c in customers %}
+						{% set selected_option = ( c.id in domainMatches|keys ? domainMatches[c.id] : null ) %}
+						<tr>
+							<td>
+								{{ c.matchcode }}
+							</td>
+							<td>
+								{{ c.firma }}<br>
+								<small>{{ c.strasse }}{% if c.plz %},{% endif %} {{ c.plz }} {{ c.ort }}</small><br>
+								<small><b>{{ c.email }}</b></small>
+							</td>
+							<td>
+								{% for a in c.ansprechpartner %}
+									{{ a.name }}<br>
+									{{ a.email }}
+								{% endfor %}
+							</td>
+							<td>
+								<select class="uv-select" data-customer-id={{c.id}} id="domains_{{c.id}}">
+									
+									<option value="">
+										{{"Assign domain"|trans}}...
+									</option>
+
+									{% set domain_found = 0 %}
+
+									{% for d in domains %}
+
+										<option value="{{d['domain']}}"
+											{% if selected_option == d['domain'] %}selected{% endif %}>
+											{{d['domain']}}
+										</option>
+
+									{% endfor %}
+
+								</select>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="uv-action-bar">
+				<div class="uv-action-bar-col-lt" style="width: 100%">
+					<a href="{{path('webmatic_customer_matching_preset', {page: (page-1)})}}"{% if page == 1 %} disabled="disabled" {% endif %}class="uv-btn-small" type="button" style="margin: auto .125em; width: 2.5em; text-align: center;"><<</a> 		
+					{% for i in 1..pages %}
+						<a href="{{path('webmatic_customer_matching_preset', {page: i})}}"{% if i == page %} disabled="disabled" {% endif %}class="uv-btn-small" type="button" style="margin: auto .125em; width: 2.5em; text-align: center;">{{i}}</a> 	
+					{% endfor %}
+					<a href="{{path('webmatic_customer_matching_preset', {page: (page+1)})}}"{% if page == pages %} disabled="disabled" {% endif %}class="uv-btn-small" type="button" style="margin: auto .125em; width: 2.5em; text-align: center;">>></a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}
+{% block footer %}
+	{{ parent() }}
+	<script>
+		$(document).ready( () => {
+			$("select[id^='domains_']").select2({
+				tags: true
+			})
+			$("select[id^='domains_']").on("change", e => {
+				var url = "{{path('webmatic_customer_match_domain', {customer: 0, domain: 'foo.bar'})}}"
+				url = url.replace(0, e.target.dataset.customerId)
+				url = url.replace('foo.bar', e.target.value)
+
+				$.post(url, data => {
+					app.appView.renderResponseAlert(data);
+				}, "json")
+				.fail( err => {
+					app.appView.renderResponseAlert({"alertClass": "danger", "alertMessage": err.responseJSON.error});
+				})
+			})
+		})
+	</script>
+{% endblock %}
