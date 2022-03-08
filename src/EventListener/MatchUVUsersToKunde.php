@@ -54,9 +54,13 @@ final class MatchUVUsersToKunde implements EventSubscriber
 
             $mappings = [];
             foreach ($users as $u) {
-                $mappings[] = (new UserKundeMatch())
-                                ->setUser($u)
-                                ->setKunde($entity->getKunde());
+                $existingMapping = $this->em->getRepository(UserKundeMatch::class)
+                                ->findOneBy(["user" => $u, "kunde" => $entity->getKunde()]);
+                if (!$existingMapping) {
+                    $mappings[] = (new UserKundeMatch())
+                                    ->setUser($u)
+                                    ->setKunde($entity->getKunde());
+                }
                                 
             }
             $this->em->saveEntities($mappings);
@@ -101,9 +105,13 @@ final class MatchUVUsersToKunde implements EventSubscriber
 
             $mappings = [];
             foreach ($users as $u) {
-                $mappings[] = (new UserKundeMatch())
-                                ->setUser($u)
-                                ->setKunde($entity->getKunde());
+                $existingMapping = $this->em->getRepository(UserKundeMatch::class)
+                                ->findOneBy(["user" => $u, "kunde" => $entity->getKunde()]);
+                if (!$existingMapping) {
+                    $mappings[] = (new UserKundeMatch())
+                                    ->setUser($u)
+                                    ->setKunde($entity->getKunde());
+                }
             }
             $this->em->saveEntities($mappings);
         }
