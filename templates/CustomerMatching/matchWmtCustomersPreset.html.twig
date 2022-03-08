@@ -47,6 +47,7 @@
 						<th>Firma</th>
 						<th>Ansprechpartner</th>
 						<th>Domain</th>
+						<th></th>
 					</tr>
 					</thead>
 					<tbody>
@@ -87,6 +88,14 @@
 
 								</select>
 							</td>
+							<td>
+								<a id="reset_{{c.id}}" class="uv-btn-small"{% if not selected_option %} disabled="disabled"{% endif %} onclick="resetDomain({{c.id}})">
+									<svg style="height: 1.5em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+										<!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+										<path style="fill: white;" d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM394.8 466.1C393.2 492.3 372.3 512 346.9 512H101.1C75.75 512 54.77 492.3 53.19 466.1L31.1 128H416L394.8 466.1z"/>
+									</svg>
+								</a>
+							</td>
 						</tr>
 						{% endfor %}
 					</tbody>
@@ -109,10 +118,38 @@
 {% block footer %}
 	{{ parent() }}
 	<script>
+
+		function resetDomain (id) {
+			let select = $("select[id^='domains_"+id+"']");
+			var domain = select.val();
+
+			if (!domain) return;
+
+			var dummy_option = `
+				<option value="">
+					{{"Assign domain"|trans}}...
+				</option>
+			`
+
+			var url = "{{path('webmatic_customer_reset_domain', {customer: 0, domain: 'foo.bar'})}}"
+			url = url.replace(0, id)
+			url = url.replace('foo.bar', domain)
+
+			$.post(url, data => {
+				$("a#reset_"+id).attr("disabled", "disabled")
+				select.prepend(dummy_option).val("");
+				app.appView.renderResponseAlert(data);
+			}, "json")
+			.fail( err => {
+				app.appView.renderResponseAlert({"alertClass": "danger", "alertMessage": err.responseJSON.error});
+			})
+		}
+
 		$(document).ready( () => {
 			$("select[id^='domains_']").select2({
 				tags: true
 			})
+
 			$("select[id^='domains_']").on("change", e => {
 				var url = "{{path('webmatic_customer_match_domain', {customer: 0, domain: 'foo.bar'})}}"
 				url = url.replace(0, e.target.dataset.customerId)
@@ -120,8 +157,11 @@
 
 				$.post(url, data => {
 					app.appView.renderResponseAlert(data);
+					$(e.target).children("option[value='']").remove();
+					$("a#reset_"+e.target.dataset.customerId).attr("disabled", null)
 				}, "json")
 				.fail( err => {
+					$("a#reset_"+e.target.dataset.customerId).attr("disabled", "disabled")
 					app.appView.renderResponseAlert({"alertClass": "danger", "alertMessage": err.responseJSON.error});
 				})
 			})

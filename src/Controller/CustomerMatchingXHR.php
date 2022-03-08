@@ -51,6 +51,31 @@ class CustomerMatchingXHR extends AbstractController {
 
     /**
      * @Route(
+     *  "/{_locale}/%uvdesk_site_path.member_prefix%/wmt/customer/match/{customer}/{domain}/reset",
+     *  name="webmatic_customer_reset_domain"),
+     *  requirements={"customer":"\d+","domain":"^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$"},
+     *  methods={"HEAD", "POST"})
+     */
+    function resetDomainMatch(ORMEntityManagerInterface $em, Kunde $customer, string $domain) : Response {
+
+        try {
+
+            $entity = $em->getRepository(KundeDomain::class)
+                        ->findOneBy(["kunde" => $customer, "domain" => $domain]);
+            $em->remove($entity);
+            $em->flush();
+
+            $msg = "Die Zurdnung $domain zu ".$customer->getMatchcode()." wurde entfernt.";
+            return $this->json(["alertClass" => "success", "alertMessage" => $msg]);
+        } catch( Exception $e) {
+            $msg = "Beim Entfernen der Zuordnung ist ein Fehler aufgetreten: ".$e->getMessage();
+            return $this->json(["error" => $msg], 400);
+        }    
+
+    }
+
+    /**
+     * @Route(
      *  "/{_locale}/%uvdesk_site_path.member_prefix%/wmt/user/match/{user}/{customer}/set",
      *  name="webmatic_customer_match_user"),
      *  requirements={"user":"\d+|(__USER__)","customer":"\d+|(__CUSTOMER__)"},
