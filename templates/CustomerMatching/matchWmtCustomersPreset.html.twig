@@ -121,7 +121,7 @@
 	<script>
 
 		function resetDomain (id) {
-			let select = $("select[id^='domains_"+id+"']");
+			let select = $("select#domains_"+id);
 			var domain = select.val();
 
 			if (!domain) return;
