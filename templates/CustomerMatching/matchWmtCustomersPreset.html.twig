@@ -19,9 +19,9 @@
 		
 		<div class="uv-view {% if app.request.cookies and app.request.cookies.get('uv-asideView') %}uv-aside-view{% endif %}">
 			<h1>{{ 'Domain presets'|trans }}</h1>
-			<p>Voreinstellungen für eine Domain dienen dazu, Nutzer mit einer bestimmten Mail-Domain direkt dem richtigen Kunden zuzuordnen. 
+			<p>Voreinstellungen für eine Domain dienen dazu, Nutzer mit einer bestimmten Mail-Domain direkt dem richtigen Kunden zuzuordnen.<br> 
 			Es werden neu angelegte Nutzer direkt zugeordnet. Bei Änderung der Domain des Kunden werden alle bereits zugeordneten Nutzer aktualisiert.<br>
-			Per Knopfdruck kann die Domain aus den bereits im Lexware hinterlegten Adressen oder den Adressen der Ansprechpartner ausgelesen werden. Kundenspezifische Domains sind hierbei notwendig.</p>	
+			Per Knopfdruck kann die Domain aus den bereits im Lexware hinterlegten Adressen ausgelesen werden. Kundenspezifische Domains sind notwendig, Freemail-Anbieter werden übersprungen.</p>	
 			<div class="uv-action-bar">
 				<div class="uv-action-bar-col-lt" style="width: 100%">
 					<a href="{{path('webmatic_customer_matching_preset', {page: (page-1)})}}"{% if page == 1 %} disabled="disabled" {% endif %}class="uv-btn-small" type="button" style="margin: auto .125em; width: 2.5em; text-align: center;"><<</a> 		
@@ -29,13 +29,18 @@
 						<a href="{{path('webmatic_customer_matching_preset', {page: i})}}"{% if i == page %} disabled="disabled" {% endif %}class="uv-btn-small" type="button" style="margin: auto .125em; width: 2.5em; text-align: center;">{{i}}</a> 	
 					{% endfor %}
 					<a href="{{path('webmatic_customer_matching_preset', {page: (page+1)})}}"{% if page == pages %} disabled="disabled" {% endif %}class="uv-btn-small" type="button" style="margin: auto .125em; width: 2.5em; text-align: center;">>></a>
-					<!--     v   Input link for auto-assign here   -->
-					<a href="#" type="button" class="uv-btn-action" style="float: right; margin-right: 1.5em;">
+					<a onclick="autoAssign()" type="button" class="uv-btn-action" style="float: right; margin-right: 1.5em;">
 						<svg style="height: 1em; margin-right: .125em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 							<!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
 							<path style="fill: white;" d="M449.9 39.96l-48.5 48.53C362.5 53.19 311.4 32 256 32C161.5 32 78.59 92.34 49.58 182.2c-5.438 16.81 3.797 34.88 20.61 40.28c16.97 5.5 34.86-3.812 40.3-20.59C130.9 138.5 189.4 96 256 96c37.96 0 73 14.18 100.2 37.8L311.1 178C295.1 194.8 306.8 223.4 330.4 224h146.9C487.7 223.7 496 215.3 496 204.9V59.04C496 34.99 466.9 22.95 449.9 39.96zM441.8 289.6c-16.94-5.438-34.88 3.812-40.3 20.59C381.1 373.5 322.6 416 256 416c-37.96 0-73-14.18-100.2-37.8L200 334C216.9 317.2 205.2 288.6 181.6 288H34.66C24.32 288.3 16 296.7 16 307.1v145.9c0 24.04 29.07 36.08 46.07 19.07l48.5-48.53C149.5 458.8 200.6 480 255.1 480c94.45 0 177.4-60.34 206.4-150.2C467.9 313 458.6 294.1 441.8 289.6z"/>
 						</svg>
 						{{ "Assign by stored mail"|trans }}
+					</a>
+					<a class="uv-btn-action" onclick="showSkipDomains()" type="button" style="float: right; margin-right: 1em; padding: 6px 6px 3px 6px;">
+						<svg style="height: 1.5em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+							<!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+							<path style="fill: white;" d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 400c-18 0-32-14-32-32s13.1-32 32-32c17.1 0 32 14 32 32S273.1 400 256 400zM325.1 258L280 286V288c0 13-11 24-24 24S232 301 232 288V272c0-8 4-16 12-21l57-34C308 213 312 206 312 198C312 186 301.1 176 289.1 176h-51.1C225.1 176 216 186 216 198c0 13-11 24-24 24s-24-11-24-24C168 159 199 128 237.1 128h51.1C329 128 360 159 360 198C360 222 347 245 325.1 258z"/>
+						</svg>
 					</a>
 				</div>
 			</div>
@@ -119,6 +124,63 @@
 {% block footer %}
 	{{ parent() }}
 	<script>
+
+		function showSkipDomains() {
+			$.get("{{path('webmatic_skip_domains_list')}}", json => {
+				console.log(json)
+				app.appView.renderResponseAlert({"alertClass": "dark", "alertMessage": "Ignorierte Freemail-Domains: " + json.join(", ")});
+			})
+		}
+
+		function autoAssign() {
+
+			$.get("{{path('webmatic_check_auto_assign_domain')}}", () => {
+				var url = "{{path('webmatic_customer_auto_assign_domain')}}"
+			var spinner = `
+				<style>
+					.spinner {
+						animation-name: fa-spin;
+						animation-direction: normal;
+						animation-duration: 1s;
+						animation-iteration-count: infinite;
+						animation-timing-function: steps(8);
+					}
+					@keyframes fa-spin {
+						0% {
+						 -webkit-transform:rotate(0deg);
+						 transform:rotate(0deg)
+						}
+						to {
+						 -webkit-transform:rotate(1turn);
+						 transform:rotate(1turn)
+						}
+					}   
+				</style>
+				<svg class="spinner" style="height: 5em; display: none; position: absolute; left: 50%; top: 25%;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+					<!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+					<path style="fill: #ffc730;" d="M304 48C304 74.51 282.5 96 256 96C229.5 96 208 74.51 208 48C208 21.49 229.5 0 256 0C282.5 0 304 21.49 304 48zM304 464C304 490.5 282.5 512 256 512C229.5 512 208 490.5 208 464C208 437.5 229.5 416 256 416C282.5 416 304 437.5 304 464zM0 256C0 229.5 21.49 208 48 208C74.51 208 96 229.5 96 256C96 282.5 74.51 304 48 304C21.49 304 0 282.5 0 256zM512 256C512 282.5 490.5 304 464 304C437.5 304 416 282.5 416 256C416 229.5 437.5 208 464 208C490.5 208 512 229.5 512 256zM74.98 437C56.23 418.3 56.23 387.9 74.98 369.1C93.73 350.4 124.1 350.4 142.9 369.1C161.6 387.9 161.6 418.3 142.9 437C124.1 455.8 93.73 455.8 74.98 437V437zM142.9 142.9C124.1 161.6 93.73 161.6 74.98 142.9C56.24 124.1 56.24 93.73 74.98 74.98C93.73 56.23 124.1 56.23 142.9 74.98C161.6 93.73 161.6 124.1 142.9 142.9zM369.1 369.1C387.9 350.4 418.3 350.4 437 369.1C455.8 387.9 455.8 418.3 437 437C418.3 455.8 387.9 455.8 369.1 437C350.4 418.3 350.4 387.9 369.1 369.1V369.1z"/>
+				</svg>`
+				$(".uv-view").children().fadeOut(200)
+				setTimeout(() => {
+					$(".uv-view").append(spinner);
+					$(".uv-view svg").fadeIn(200, () => {
+						$.ajax({
+							method: "PUT",
+							url: url,
+							dataType: "json"
+						})
+						.always( () => {
+							location.reload();
+						})
+					});
+				}, 250)
+			}, "json")
+			.fail( err => {
+				let json = err.responseJSON
+				app.appView.renderResponseAlert(json);
+			})
+
+		}
 
 		function resetDomain (id) {
 
