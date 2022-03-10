@@ -36,6 +36,23 @@ class CustomerMatchingXHR extends AbstractController {
 
     /**
      * @Route(
+     *  "/%uvdesk_site_path.member_prefix%/wmt/customer/{customer}/matchcode",
+     *  name="webmatic_get_kunde_matchcode"),
+     *  methods={"HEAD", "GET"})
+     */
+    function getKundeMatchcode(User $customer, EntityManagerInterface $em) : Response {
+        $match = $em->getRepository(UserKundeMatch::class)
+                    ->findOneByUser($customer);
+        $matchcode = "Ohne Kunde";
+        if ($match) {
+            $matchcode = $match->getKunde()->getMatchcode();
+        }
+
+        return new Response($matchcode);
+    }
+
+    /**
+     * @Route(
      *  "/%uvdesk_site_path.member_prefix%/wmt/check/auto-assign",
      *  name="webmatic_check_auto_assign_domain"),
      *  methods={"HEAD", "GET"})
