@@ -71,12 +71,12 @@ final class MatchUVUsersToKunde implements EventSubscriber
                         $entity->getEmail(),
                         strpos($entity->getEmail(), "@")+1
                     );
-            $kunde = $this->em->getRepository(KundeDomain::class)
+            $kundeDomain = $this->em->getRepository(KundeDomain::class)
                                 ->findOneByDomain($domain);
             
-            if ($kunde) {
+            if ($kundeDomain) {
                 $match = new UserKundeMatch();
-                $match->setKunde($kunde)->setUser($entity);
+                $match->setKunde($kundeDomain->getKunde())->setUser($entity);
                 $this->em->saveEntity($match);
             }
         }
@@ -122,8 +122,8 @@ final class MatchUVUsersToKunde implements EventSubscriber
                         strpos($entity->getEmail(), "@")+1
                     );
             $newKunde = $this->em->getRepository(KundeDomain::class)
-                                ->findOneByDomain($domain)
-                                ->getKunde();
+                                    ->findOneByDomain($domain)
+                                    ->getKunde();
             $oldMatch = $this->em->getRepository(UserKundeMatch::class)
                                 ->findOneByUser($entity);
             

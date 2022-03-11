@@ -54,10 +54,10 @@ final class SynchronizeUserEntities implements EventSubscriber
     public function getSubscribedEvents(): array
     {
         return [
-            Events::postPersist,
-            Events::preUpdate,
-            Events::postUpdate,
-            Events::postRemove
+            //Events::postPersist,
+            //Events::preUpdate,
+            //Events::postUpdate,
+            //Events::postRemove
         ];
     }
 

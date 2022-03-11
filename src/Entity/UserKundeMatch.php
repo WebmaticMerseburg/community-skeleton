@@ -17,7 +17,7 @@ class UserKundeMatch
      * @ORM\Id
      * @var \Webkul\UVDesk\CoreFrameworkBundle\Entity\User
      * 
-     * @ORM\ManyToOne(targetEntity="Webkul\UVDesk\CoreFrameworkBundle\Entity\User", inversedBy="userInstance")
+     * @ORM\ManyToOne(targetEntity="Webkul\UVDesk\CoreFrameworkBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $user;
