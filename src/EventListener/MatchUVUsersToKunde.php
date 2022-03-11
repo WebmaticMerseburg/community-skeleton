@@ -49,6 +49,9 @@ final class MatchUVUsersToKunde implements EventSubscriber
                               ->select("u")
                               ->from(UVDeskUser::class, "u")
                               ->where("u.email LIKE :domain")
+                              ->leftJoin('u.userInstance', 'i')
+                              ->andwhere('i.supportRole = :roles')
+                              ->setParameter('roles', 4)
                               ->setParameter("domain", "%".$entity->getDomain()."%")
                               ->getQuery()->getResult();
 
@@ -67,17 +70,19 @@ final class MatchUVUsersToKunde implements EventSubscriber
         }
 
         if ($entity instanceof UVDeskUser) {
-            $domain = substr(
-                        $entity->getEmail(),
-                        strpos($entity->getEmail(), "@")+1
-                    );
-            $kundeDomain = $this->em->getRepository(KundeDomain::class)
-                                ->findOneByDomain($domain);
-            
-            if ($kundeDomain) {
-                $match = new UserKundeMatch();
-                $match->setKunde($kundeDomain->getKunde())->setUser($entity);
-                $this->em->saveEntity($match);
+            if ($entity->getCustomerInstance()) {
+                $domain = substr(
+                            $entity->getEmail(),
+                            strpos($entity->getEmail(), "@")+1
+                        );
+                $kundeDomain = $this->em->getRepository(KundeDomain::class)
+                                    ->findOneByDomain($domain);
+                
+                if ($kundeDomain) {
+                    $match = new UserKundeMatch();
+                    $match->setKunde($kundeDomain->getKunde())->setUser($entity);
+                    $this->em->saveEntity($match);
+                }
             }
         }
         
@@ -92,6 +97,9 @@ final class MatchUVUsersToKunde implements EventSubscriber
                               ->select("u")
                               ->from(UVDeskUser::class, "u")
                               ->where("u.email LIKE :domain")
+                              ->leftJoin('u.userInstance', 'i')
+                              ->andwhere('i.supportRole = :roles')
+                              ->setParameter('roles', 4)
                               ->setParameter("domain", "%".$entity->getDomain()."%")
                               ->getQuery()->getResult();
             
@@ -117,27 +125,29 @@ final class MatchUVUsersToKunde implements EventSubscriber
         }
 
         if ($entity instanceof UVDeskUser) {
-            $domain = substr(
-                        $entity->getEmail(),
-                        strpos($entity->getEmail(), "@")+1
-                    );
-            $newKunde = $this->em->getRepository(KundeDomain::class)
-                                    ->findOneByDomain($domain)
-                                    ->getKunde();
-            $oldMatch = $this->em->getRepository(UserKundeMatch::class)
-                                ->findOneByUser($entity);
-            
-            if ($oldMatch) {
-                $oldKunde = $oldMatch->getKunde();
-                if ($oldKunde !== $newKunde && !empty($newKunde)) {
-                    $oldMatch->setKunde($newKunde);
-                    $this->em->saveEntity($oldMatch);
-                }
-            } else {
-                if ($newKunde) {
-                    $match = new UserKundeMatch();
-                    $match->setKunde($newKunde)->setUser($entity);
-                    $this->em->saveEntity($match);
+            if ($entity->getCustomerInstance()) {
+                $domain = substr(
+                            $entity->getEmail(),
+                            strpos($entity->getEmail(), "@")+1
+                        );
+                $newKunde = $this->em->getRepository(KundeDomain::class)
+                                        ->findOneByDomain($domain)
+                                        ->getKunde();
+                $oldMatch = $this->em->getRepository(UserKundeMatch::class)
+                                    ->findOneByUser($entity);
+                
+                if ($oldMatch) {
+                    $oldKunde = $oldMatch->getKunde();
+                    if ($oldKunde !== $newKunde && !empty($newKunde)) {
+                        $oldMatch->setKunde($newKunde);
+                        $this->em->saveEntity($oldMatch);
+                    }
+                } else {
+                    if ($newKunde) {
+                        $match = new UserKundeMatch();
+                        $match->setKunde($newKunde)->setUser($entity);
+                        $this->em->saveEntity($match);
+                    }
                 }
             }
         }
