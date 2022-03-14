@@ -85,8 +85,10 @@ class CustomerMatching extends AbstractController {
         $uv_users = $em->createQueryBuilder()
                             ->select("u")
                             ->from(User::class, "u")
+                            ->leftJoin('u.userInstance', 'i')
+                            ->andwhere('i.supportRole = :roles')
+                            ->setParameter('roles', 4)
                             ->orderBy("u.lastName")
-                            ->setMaxResults(20)
                             ->getQuery()->getResult();
 
         $kunden = $em->createQueryBuilder()
