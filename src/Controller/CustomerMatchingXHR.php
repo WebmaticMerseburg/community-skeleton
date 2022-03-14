@@ -21,7 +21,7 @@ class CustomerMatchingXHR extends AbstractController {
         "googlemail.com", "gmail.com", "yahoo.com", "yahoo.de", "aol.com", "aol.de",
         "live.com", "live.de", "hotmail.com", "hotmail.de", "outlook.com", "outlook.de",
         "msn.com", "msn.de", "gmx.de", "gmx.net", "web.de", "mail.ru", "freenet.de", "t-online.de",
-        "mail.com", "mail.de", "icloud.com"
+        "mail.com", "mail.de", "icloud.com", "online.de"
     ];
 
     /**
@@ -86,7 +86,7 @@ class CustomerMatchingXHR extends AbstractController {
             $domainResponse = implode(", ", $multipleDomains);
             return $this->json(["alertClass" => "warning", "alertMessage" => "Doppelte Domains: " . $domainResponse . ". Korrektur notwendig, um Zuordnung fehlerfrei durchführen zu können."], 400);
         } else {
-            return new Response();
+            return $this->json([]);
         }
         
 
