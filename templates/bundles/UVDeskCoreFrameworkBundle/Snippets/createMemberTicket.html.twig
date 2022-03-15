@@ -432,7 +432,6 @@
     $(document).ready(function() {
         $.get("{{path('webmatic_ticket_user_list')}}", data => {
             let json = data
-            console.log(json)
             let html = "<option value=''>{{ 'Choose Customer or input email address'|trans }}</option>"
             for (let i in json) {
                 let mail = i

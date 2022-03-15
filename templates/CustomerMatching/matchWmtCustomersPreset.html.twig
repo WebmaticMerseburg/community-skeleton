@@ -127,7 +127,6 @@
 
 		function showSkipDomains() {
 			$.get("{{path('webmatic_skip_domains_list')}}", json => {
-				console.log(json)
 				app.appView.renderResponseAlert({"alertClass": "dark", "alertMessage": "Ignorierte Freemail-Domains: " + json.join(", ")});
 			})
 		}
