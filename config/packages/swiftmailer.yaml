@@ -1,4 +1,15 @@
 swiftmailer:
-    # url: '%env(MAILER_URL)%'
-    # spool: { type: 'memory' }
+    default_mailer: mailer_3499
+    mailers:
+        mailer_3499:
+            transport: smtp
+            username: tickets@webmatic.de
+            password: OURiVy1ANlpSWjk=
+            host: omail.webmatic.de
+            port: 587
+            encryption: tls
+            auth_mode: plain
+            sender_address: 
+            delivery_addresses: ['']
+            disable_delivery: false
 
