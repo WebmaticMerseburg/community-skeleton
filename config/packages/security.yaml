@@ -6,7 +6,8 @@ security:
         ROLE_CUSTOMER: ~
     providers:
         user_provider:
-            id: user.provider
+            #id: user.provider
+            id: App\Security\UserProvider
         uv_api_credentials:
             id: Webkul\UVDesk\ApiBundle\Providers\ApiCredentials
     encoders:
