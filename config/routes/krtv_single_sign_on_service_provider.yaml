@@ -1,7 +1,7 @@
 
 krtv_single_sign_on_service_provider:
     resource: "@KrtvSingleSignOnServiceProviderBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /de/member/
 
 otp:
-    path: /otp/validate
+    path: /de/member/otp/validate
