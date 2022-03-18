@@ -13,19 +13,14 @@ security:
     encoders:
         Webkul\UVDesk\CoreFrameworkBundle\Entity\User: auto
     firewalls:
-        test:
-            anonymous: true
-            form_login: false
-            logout:
-                invalidate_session: true
-                path: /logout
-                target: '/sso/logout-user/%sso_service%'
-            pattern: ^/test
-            provider: webmatic_kunde_chain
+        back_support:
+            pattern: /%uvdesk_site_path.member_prefix%
+            provider: user_provider
+            anonymous: false
             sso:
                 always_use_default_target_path: true
-                default_target_path: /
-                check_path: /test/otp/validate # Same as in app/config/routing.yml
+                default_target_path: /de/%uvdesk_site_path.member_prefix%/dashboard
+                check_path: /de/%uvdesk_site_path.member_prefix%/otp/validate # Same as in app/config/routing.yml
                 require_previous_session: false
                 sso_failure_path: '%idp_login_url%' # Can also be as an absolute path to service provider
                 sso_scheme: '%sso_scheme%' # Required
@@ -38,26 +33,11 @@ security:
                 sso_service: '%sso_service%' # Consumer name
                 sso_service_extra: null            # Default service extra parameters. Optional.
                 sso_service_extra_parameter: service_extra   # Parameter name. Optional
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            switch_user:
-                role: ROLE_ADMIN
-        back_support:
-            pattern: /%uvdesk_site_path.member_prefix%
-            provider: user_provider
-            anonymous: null
-            form_login:
-                use_referer: true
-                login_path: helpdesk_member_handle_login
-                check_path: helpdesk_member_handle_login
-                default_target_path: helpdesk_member_dashboard
-                always_use_default_target_path: true
+            form_login: false
             logout:
+                invalidate_session: true
                 path: helpdesk_member_handle_logout
-                target: helpdesk_member_handle_login
+                target: /de/%uvdesk_site_path.member_prefix%/sso/logout-user/%sso_service%
         customer:
             pattern: /
             provider: user_provider
@@ -82,6 +62,7 @@ security:
         - { path: /%uvdesk_site_path.member_prefix%/login,                              roles: [ IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_ANONYMOUSLY ] }
         - { path: /%uvdesk_site_path.member_prefix%/create-account,                     roles: [ IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_ANONYMOUSLY ] }
         - { path: /%uvdesk_site_path.member_prefix%/forgot-password,                    roles: [ IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: /%uvdesk_site_path.member_prefix%/sso,                                roles: [ IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_ANONYMOUSLY ] }
         - { path: /%uvdesk_site_path.member_prefix%/update-credentials,                 roles: [ IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_ANONYMOUSLY ] }
         - { path: /%uvdesk_site_path.member_prefix%/mailbox/listener,                   roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
         - { path: /%uvdesk_site_path.member_prefix%/,                                   roles: [ ROLE_AGENT ] }
