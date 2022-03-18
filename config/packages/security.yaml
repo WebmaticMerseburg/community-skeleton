@@ -19,7 +19,7 @@ security:
             anonymous: false
             sso:
                 always_use_default_target_path: true
-                default_target_path: '%sso_scheme%://%sso_host%/de/%uvdesk_site_path.member_prefix%/dashboard'
+                default_target_path: '/'
                 check_path: /de/%uvdesk_site_path.member_prefix%/otp/validate # Same as in app/config/routing.yml
                 require_previous_session: false
                 sso_failure_path: '%idp_login_url%' # Can also be as an absolute path to service provider
