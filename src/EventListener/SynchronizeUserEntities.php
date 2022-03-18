@@ -54,10 +54,10 @@ final class SynchronizeUserEntities implements EventSubscriber
     public function getSubscribedEvents(): array
     {
         return [
-            //Events::postPersist,
-            //Events::preUpdate,
-            //Events::postUpdate,
-            //Events::postRemove
+            Events::postPersist,
+            Events::preUpdate,
+            Events::postUpdate,
+            Events::postRemove
         ];
     }
 
@@ -67,9 +67,9 @@ final class SynchronizeUserEntities implements EventSubscriber
         $this->entityManager = $event->getEntityManager();
         if ($entity instanceof PortalUser) {
             $this->savePortalUser($entity);
-        } elseif ($entity instanceof UVDeskUser) {
+        }/* elseif ($entity instanceof UVDeskUser) {
             $this->saveUVDeskUser($entity);
-        }
+        }*/
     }
 
     public function preUpdate(PreUpdateEventArgs $event): void
@@ -89,11 +89,11 @@ final class SynchronizeUserEntities implements EventSubscriber
         $this->entityManager = $event->getEntityManager();
         if ($entity instanceof PortalUser) {
             $this->savePortalUser($entity);
-        } elseif ($entity instanceof UVDeskUser) {
+        }/* elseif ($entity instanceof UVDeskUser) {
             $this->saveUVDeskUser($entity);
         } elseif ($entity instanceof UserInstance) {
             $this->saveUVDeskUser($entity->getUser());
-        }
+        }*/
     }
 
     public function postRemove(LifecycleEventArgs $event): void
