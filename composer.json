@@ -54,7 +54,7 @@
         "webmatic/kunde-bundle": "dev-portal-client",
         "webmatic/portal-client-bundle": "^1.0.0",
         "webmatic/user-bundle": "dev-portal-client",
-        "webmatic/uvdesk-kunde-extension": "^1.0",
+        "webmatic/uvdesk-kunde-extension": "^1.0.1",
         "webmatic/uvdesk-sla-extension": "dev-main"
     },
     "require-dev": {
