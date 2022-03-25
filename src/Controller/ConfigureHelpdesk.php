@@ -12,10 +12,10 @@ use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Webkul\UVDesk\CoreFrameworkBundle\Entity as CoreEntities;
+use Webmatic\UtilBundle\Controller\AbstractController;
 
-class ConfigureHelpdesk extends Controller
+class ConfigureHelpdesk extends AbstractController
 {
     const HELPDESK_VERSION = '1.0.18';
     const DB_ENV_PATH_TEMPLATE = "DATABASE_URL=DB_DRIVER://DB_USER:DB_PASSWORD@DB_HOST/DB_NAME\n";
