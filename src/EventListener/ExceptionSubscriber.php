@@ -41,7 +41,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
 		}
 
 		// @TODO: We need to take into account the response type as well (html, xml, json)
-		$exception = $event->getException();
+		$exception = $event->getThrowable();
 
 		if ($exception->getCode() == 403) {
 			// On forbidden exception, we need to either:
