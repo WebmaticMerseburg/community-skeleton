@@ -52,7 +52,7 @@
         "uvdesk/extension-framework": "^1.0",
         "uvdesk/mailbox-component": "^1.0",
         "uvdesk/support-center-bundle": "^1.0",
-        "webmatic/kunde-bundle": "dev-5.4-portal-client",
+        "webmatic/kunde-bundle": "dev-5.4-uvdesk",
         "webmatic/portal-client-bundle": "^2.0.0",
         "webmatic/user-bundle": "dev-5.4-portal-client",
         "webmatic/uvdesk-kunde-extension": "1.1.*",
