@@ -29,3 +29,9 @@ doctrine:
                 dir: '%kernel.project_dir%/apps/webmatic/uvdesk-kunde-extension/src/Entity'
                 prefix: 'UVDesk\CommunityPackages\Webmatic\UVDeskKundeExtension\Entity'
                 alias: WebmaticUVDeskKundeExtensionPackage
+            UVDesk\CommunityPackages\Webmatic\UVDeskSLAExtension:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/apps/webmatic/uvdesk-sla-extension/src/Entity'
+                prefix: 'UVDesk\CommunityPackages\Webmatic\UVDeskSLAExtension\Entity'
+                alias: WebmaticUVDeskSLAExtensionPackage
