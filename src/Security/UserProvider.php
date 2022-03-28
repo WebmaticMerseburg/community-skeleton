@@ -38,23 +38,25 @@ final class UserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        $email = $this->connection
-            ->createQueryBuilder()
-            ->select('email')
-            ->from('user')
-            ->where(":username IN (username, email)")
-            ->setMaxResults(1)
-            ->setParameter('username', $username)
-            ->execute()
-            ->fetchOne()
-        ;
-        if (false === $email) {
-            $exception = new UsernameNotFoundException();
-            $exception->setUsername($username);
-            throw $exception;
+        try {
+            return $this->uvDeskUserProvider->loadUserByUsername($username);
+        } catch (UsernameNotFoundException $e) {
+            $email = $this->connection
+                ->createQueryBuilder()
+                ->select('email')
+                ->from('user')
+                ->where("username = :username")
+                ->setMaxResults(1)
+                ->setParameter('username', $username)
+                ->execute()
+                ->fetchOne()
+            ;
+            if (false === $email) {
+                throw $e;
+            }
+            return $this->uvDeskUserProvider->loadUserByUsername($email);
         }
 
-        return $this->uvDeskUserProvider->loadUserByUsername($email);
     }
 
     /**
