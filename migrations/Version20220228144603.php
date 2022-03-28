@@ -21,7 +21,7 @@ final class Version20220228144603 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<SQL
-            CREATE TABLE uvdesk.user_kunde_matching (
+            CREATE TABLE IF NOT EXISTS uvdesk.user_kunde_matching (
                 kunde_id int(10) unsigned NOT NULL,
                 user_id int(11) NOT NULL,
                 CONSTRAINT user_kunde_matching_PK PRIMARY KEY (kunde_id,user_id),
@@ -34,7 +34,7 @@ final class Version20220228144603 extends AbstractMigration
 SQL
         );
         $this->addSql(<<<SQL
-            CREATE TABLE `kunde_domain` (
+            CREATE TABLE IF NOT EXISTS `kunde_domain` (
                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                 `kunde_id` int(10) unsigned NOT NULL,
                 `domain` varchar(63) NOT NULL,
