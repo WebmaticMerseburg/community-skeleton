@@ -1030,6 +1030,8 @@
 "Submit And Answered": "Senden und Status 'beantwortet'"
 "Submit And Resolved": "Senden und Status 'gelöst'"
 "Submit And Closed": "Senden und Status 'geschlossen'"
+"Are you sure? You want to reply and close ticket." : "Sind Sie sicher, dass Sie antworten und das Ticket als 'geschlossen' markieren möchten?"
+"Confirm Close Ticket" : "Schließen des Tickets bestätigen"
 "Choose a Color": "Farbe wählen"
 "Create": "Erstellen"
 "Edit Label": "Label bearbeiten"
