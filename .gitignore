@@ -27,3 +27,7 @@
 ###> composer ###
 *.lock
 ###< composer ###
+
+###> Backup files ###
+*.bak
+###< Backup files ###
