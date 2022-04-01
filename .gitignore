@@ -31,3 +31,4 @@
 ###> Backup files ###
 *.bak
 ###< Backup files ###
+migrations/Version20220324140625.php
