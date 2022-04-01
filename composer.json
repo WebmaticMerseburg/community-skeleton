@@ -50,7 +50,7 @@
         "uvdesk/composer-plugin": "^1.0",
         "uvdesk/core-framework": "dev-master",
         "uvdesk/extension-framework": "^1.0",
-        "uvdesk/mailbox-component": "^1.0",
+        "uvdesk/mailbox-component": "dev-master",
         "uvdesk/support-center-bundle": "^1.0",
         "webmatic/kunde-bundle": "dev-5.4-uvdesk",
         "webmatic/portal-client-bundle": "^2.0.0",
@@ -168,6 +168,10 @@
         {
             "type": "git",
             "url": "git@github.com:WebmaticMerseburg/core-framework.git"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:WebmaticMerseburg/mailbox-component.git"
         },
         {
             "type": "git",
