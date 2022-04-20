@@ -73,6 +73,12 @@
         tr.unread {
             background: #f1f1f1;
         }
+        .uv-table table tbody tr.response-needed {
+            background: rgba(255,199,48,.25) !important;
+        }
+        .uv-table table tbody tr.response-needed td {
+            border-bottom: solid 1px #f4b200;
+        }
         .uv-table table tbody tr.not-assigned {
             background: linear-gradient(to right, #fd244d .25rem, transparent .25rem calc(100% - .33rem), #fd244d calc(100% - .33rem));
         }
@@ -2390,6 +2396,10 @@
 
                     if (!this.model.attributes.agent) {
                         this.$el.addClass('not-assigned')
+                    }
+
+                    if (this.model.attributes.priority.id == 4 && this.model.attributes.isStarred) {
+                        this.$el.addClass('response-needed')
                     }
 
                     return this;
