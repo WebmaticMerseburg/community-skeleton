@@ -2407,8 +2407,10 @@
                     e.preventDefault();
                     if (Backbone.$(e.currentTarget).hasClass('uv-star-active')) {
                         Backbone.$(e.currentTarget).removeClass('uv-star-active');
+                        Backbone.$(e.currentTarget.parentElement.parentElement).removeClass('response-needed');
                     } else {
                         Backbone.$(e.currentTarget).addClass('uv-star-active');
+                        Backbone.$(e.currentTarget.parentElement.parentElement).addClass('response-needed');
                     }
 
                     this.model.save({
