@@ -1,0 +1,9 @@
+.uv-star {
+    background-image: url("./../assets/svg/calendar-circle-exclamation-duotone.svg");
+    background-position: unset;
+}
+
+.uv-star.uv-star-active {
+    background-image: url("./../assets/svg/calendar-circle-exclamation-solid.svg");
+    background-position: unset;
+}

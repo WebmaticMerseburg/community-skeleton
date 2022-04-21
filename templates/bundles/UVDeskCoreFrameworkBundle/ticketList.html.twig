@@ -2388,7 +2388,6 @@
                         path: pathToTicket.replace('replaceId', this.model.attributes.id)
                     });
                     this.$el.html(this.template(this.model.toJSON()));
-                    console.log(this.model)
 
                     if (this.model.attributes.isAgentView != true) {
                         this.$el.addClass('unread')
@@ -2398,7 +2397,7 @@
                         this.$el.addClass('not-assigned')
                     }
 
-                    if (this.model.attributes.priority.id == 4 && this.model.attributes.isStarred) {
+                    if (this.model.attributes.isStarred) {
                         this.$el.addClass('response-needed')
                     }
 
