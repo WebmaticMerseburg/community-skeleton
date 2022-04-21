@@ -56,7 +56,7 @@
         "webmatic/portal-client-bundle": "^2.0.0",
         "webmatic/user-bundle": "dev-5.4-portal-client",
         "webmatic/uvdesk-kunde-extension": "1.1.*",
-        "webmatic/uvdesk-sla-extension": "dev-main"
+        "webmatic/uvdesk-sla-extension": "1.*"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
