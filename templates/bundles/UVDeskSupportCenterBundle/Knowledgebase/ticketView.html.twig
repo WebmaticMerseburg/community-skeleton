@@ -327,6 +327,7 @@
                         </div>
                     </div>
 
+                    {% if ticket.isReplyEnabled %}
                     <!-- Reply Form Block -->
                     <div class="uv-ticket-main uv-ticket-reply uv-no-error-success-icon">
                         <div class="uv-ticket-main-lt">
@@ -412,6 +413,14 @@
                         </div>
                     </div>
                     <!-- Reply Form Block -->
+                    {% else %}
+                    <div class="uv-ticket-main" style="margin-bottom: 5em; background-color: #ef443b;">
+                        <div class="message" style="text-align: center;">
+                            <h3 style="color: white">Hinweis</h3>
+                            <p style="color: white">Antworten wurden bei diesem Ticket geschlossen.</p>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
             </section>
         </div>
