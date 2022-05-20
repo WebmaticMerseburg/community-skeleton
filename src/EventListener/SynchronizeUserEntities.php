@@ -78,7 +78,14 @@ final class SynchronizeUserEntities implements EventSubscriber
         $this->entityManager = $event->getEntityManager();
         if ($entity instanceof UVDeskUser) {
             if ($event->hasChangedField('email')) {
-                $event->setNewValue('email', $event->getOldValue());
+                $email = $event->getOldValue('email');
+                $portalUser = $event->getEntityManager()
+                    ->getRepository(PortalUserEntity::class)
+                    ->findOneByEmail($email)
+                ;
+                if (!empty($portalUser)) {
+                    $event->setNewValue('email', $email);
+                }
             }
         }
     }
