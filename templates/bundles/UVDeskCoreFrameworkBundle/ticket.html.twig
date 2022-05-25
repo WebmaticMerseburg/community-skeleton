@@ -897,6 +897,7 @@
                     </div>
                 </div>
 
+                {% if ticket.isReplyEnabled %}
                 {# Reply Ticket View #}
                 <div class="uv-ticket-main uv-ticket-reply uv-no-error-success-icon">
                     <div class="uv-ticket-main-lt">
@@ -1174,6 +1175,16 @@
                         {% endif %}
                     </div>
                 </div>
+                {% else %}
+                <div class="uv-ticket-main" style="margin-bottom: 5em; background-color: #ef443b;">
+                    <div class="uv-ticket-main-rt">
+                        <div class="message" style="text-align: center;">
+                            <h3 style="color: white">Hinweis</h3>
+                            <p style="color: white">Antworten wurden bei diesem Ticket geschlossen.</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
             </div>
 
             <!-- Bottom Action Block -->
@@ -3012,3 +3023,4 @@
         }
     </script>
 {% endblock %}
+
