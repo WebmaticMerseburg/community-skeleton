@@ -36,6 +36,10 @@ final class DisableTicketReply implements EventSubscriber
                 $entity->setIsReplyEnabled(0);
                 $this->entityManager->flush();
             }
+            elseif ($entity->getStatus()->getId() !== 5 && !$entity->getIsReplyEnabled()) {
+                $entity->setIsReplyEnabled(1);
+                $this->entityManager->flush();
+            }
         }
     }
 
