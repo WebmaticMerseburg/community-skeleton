@@ -12,7 +12,7 @@
         "doctrine/doctrine-bundle": "^2.4",
         "doctrine/doctrine-fixtures-bundle": "^3.4.0",
         "doctrine/doctrine-migrations-bundle": "^2.2.2",
-        "doctrine/orm": "^2.9",
+        "doctrine/orm": "2.11",
         "google/recaptcha": "^1.2.4",
         "knplabs/knp-paginator-bundle": "^5.4.0",
         "korotovsky/sso-sp-bundle": "0.3.x-dev",
@@ -135,31 +135,31 @@
     "repositories": [
         {
             "type": "git",
-            "url": "git@git.webmatic.de:webmatic/bundles/doctrine-bundle.git"
+            "url": "git@gitlab.webmatic.de:webmatic/bundles/doctrine-bundle.git"
         },
         {
             "type": "git",
-            "url": "git@git.webmatic.de:webmatic/bundles/form-bundle.git"
+            "url": "git@gitlab.webmatic.de:webmatic/bundles/form-bundle.git"
         },
         {
             "type": "git",
-            "url": "git@git.webmatic.de:webmatic/bundles/kunde-bundle.git"
+            "url": "git@gitlab.webmatic.de:webmatic/bundles/kunde-bundle.git"
         },
         {
             "type": "git",
-            "url": "git@git.webmatic.de:webmatic/bundles/portal-client-bundle.git"
+            "url": "git@gitlab.webmatic.de:webmatic/bundles/portal-client-bundle.git"
         },
         {
             "type": "git",
-            "url": "git@git.webmatic.de:webmatic/bundles/user-bundle.git"
+            "url": "git@gitlab.webmatic.de:webmatic/bundles/user-bundle.git"
         },
         {
             "type": "git",
-            "url": "git@git.webmatic.de:webmatic/bundles/twig-bundle.git"
+            "url": "git@gitlab.webmatic.de:webmatic/bundles/twig-bundle.git"
         },
         {
             "type": "git",
-            "url": "git@git.webmatic.de:webmatic/bundles/util-bundle.git"
+            "url": "git@gitlab.webmatic.de:webmatic/bundles/util-bundle.git"
         },
         {
             "type": "git",
@@ -183,11 +183,11 @@
         },
         {
             "type": "git",
-            "url": "git@git.webmatic.de:webmatic/uvdesk/kunde-extension.git"
+            "url": "git@gitlab.webmatic.de:webmatic/uvdesk/kunde-extension.git"
         },
         {
             "type": "git",
-            "url": "git@git.webmatic.de:webmatic/uvdesk/sla-extension.git"
+            "url": "git@gitlab.webmatic.de:webmatic/uvdesk/sla-extension.git"
         }
     ]
 }
