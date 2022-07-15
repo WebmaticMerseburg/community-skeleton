@@ -5,4 +5,5 @@ uvdesk_mailbox.yaml
 
 ###> Backup files ###
 *.bak
+*.yaml-*
 ###< Backup files ###
