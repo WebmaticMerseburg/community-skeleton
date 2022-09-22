@@ -1,0 +1,4 @@
+
+webmatic_kunde:
+    resource: "@WebmaticKundeBundle/Resources/config/routes.yaml"
+

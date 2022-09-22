@@ -1,0 +1,9 @@
+
+parameters:
+    sso_otp_host: '%env(resolve:SSO_OTP_HOST)%'
+    sso_otp_scheme: '%env(resolve:SSO_OTP_SCHEME)%'
+    sso_secret: '%env(resolve:SSO_SECRET)%'
+
+krtv_single_sign_on_service_provider:
+    otp_parameter: _otp
+    secret_parameter: sso_secret

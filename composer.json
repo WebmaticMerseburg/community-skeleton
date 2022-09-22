@@ -9,59 +9,67 @@
         "php": "^7.2.5 || ^8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "uvdesk/composer-plugin": "^1.1",
-        "symfony/flex": "^1.17|^2"
-    },
-    "flex-require": {
+        "composer/package-versions-deprecated": "1.11.99.3",
         "doctrine/annotations": "^1.0",
-        "doctrine/doctrine-fixtures-bundle": "^3.4",
-        "google/recaptcha": "^1.2",
-        "knplabs/knp-paginator-bundle": "^5.8",
-        "phpdocumentor/reflection-docblock": "^5.3",
-        "phpstan/phpdoc-parser": "^1.2",
-        "sensio/framework-extra-bundle": "^6.1",
-        "symfony/asset": "*",
-        "symfony/console": "*",
-        "symfony/dotenv": "*",
-        "symfony/expression-language": "*",
-        "symfony/form": "*",
-        "symfony/framework-bundle": "*",
-        "symfony/http-client": "*",
-        "symfony/intl": "*",
-        "symfony/mailer": "*",
-        "symfony/mime": "*",
-        "symfony/monolog-bundle": "^3.1",
-        "symfony/notifier": "*",
-        "symfony/orm-pack": "*",
-        "symfony/process": "*",
-        "symfony/property-access": "*",
-        "symfony/property-info": "*",
-        "symfony/proxy-manager-bridge": "*",
-        "symfony/runtime": "*",
-        "symfony/security-bundle": "*",
-        "symfony/serializer": "*",
-        "symfony/string": "*",
-        "symfony/swiftmailer-bundle": "^3.5",
-        "symfony/translation": "*",
-        "symfony/twig-bundle": "*",
-        "symfony/validator": "*",
-        "symfony/web-link": "*",
-        "symfony/yaml": "*",
-        "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0",
-        "uvdesk/automation-bundle": "^1.1",
-        "uvdesk/core-framework": "^1.1",
-        "uvdesk/extension-framework": "^1.1",
-        "uvdesk/mailbox-component": "^1.1",
-        "uvdesk/support-center-bundle": "^1.1"
+        "doctrine/doctrine-bundle": "^2.4",
+        "doctrine/doctrine-fixtures-bundle": "^3.4.0",
+        "doctrine/doctrine-migrations-bundle": "^2.2.2",
+        "doctrine/orm": "2.11",
+        "google/recaptcha": "^1.2.4",
+        "knplabs/knp-paginator-bundle": "^5.4.0",
+        "korotovsky/sso-sp-bundle": "0.3.x-dev",
+        "korotovsky/sso-library": "0.3.x-dev",
+        "ocramius/proxy-manager": "2.2.3",
+        "phpdocumentor/reflection-docblock": "^5.2",
+        "sensio/framework-extra-bundle": "^5.5.3",
+        "symfony/asset": "5.4.*",
+        "symfony/console": "5.4.*",
+        "symfony/dotenv": "5.4.*",
+        "symfony/expression-language": "5.4.*",
+        "symfony/flex": "^1.12.2",
+        "symfony/form": "5.4.*",
+        "symfony/framework-bundle": "5.4.*",
+        "symfony/http-client": "5.4.*",
+        "symfony/http-foundation": "5.4.*",
+        "symfony/intl": "5.4.*",
+        "symfony/mime": "5.4.*",
+        "symfony/monolog-bundle": "^3.6.0",
+        "symfony/process": "5.4.*",
+        "symfony/property-access": "5.4.*",
+        "symfony/property-info": "5.4.*",
+        "symfony/proxy-manager-bridge": "5.4.*",
+        "symfony/security-bundle": "5.4.*",
+        "symfony/serializer": "5.4.*",
+        "symfony/swiftmailer-bundle": "^3.4.0",
+        "symfony/translation": "5.4.*",
+        "symfony/twig-bundle": "5.4.*",
+        "symfony/validator": "5.4.*",
+        "symfony/var-dumper": "5.4.*",
+        "symfony/web-link": "5.4.*",
+        "symfony/yaml": "5.4.*",
+        "uvdesk/api-bundle": "^1.0",
+        "uvdesk/automation-bundle": "dev-master",
+        "uvdesk/composer-plugin": "^1.0",
+        "uvdesk/core-framework": "dev-master",
+        "uvdesk/extension-framework": "^1.0",
+        "uvdesk/mailbox-component": "dev-master",
+        "uvdesk/support-center-bundle": "^1.0",
+        "webmatic/kunde-bundle": "dev-5.4-uvdesk",
+        "webmatic/portal-client-bundle": "^2.0.0",
+        "webmatic/user-bundle": "dev-5.4-portal-client",
+        "webmatic/uvdesk-kunde-extension": "1.1.*",
+        "webmatic/uvdesk-sla-extension": "1.*"
     },
     "require-dev": {
-    },
-    "flex-require-dev": {
-        "symfony/debug-pack": "*",
+        "phpunit/phpunit": "^9.5",
+        "symfony/browser-kit": "5.4.*",
+        "symfony/css-selector": "5.4.*",
+        "symfony/debug-bundle": "5.4.*",
         "symfony/maker-bundle": "^1.0",
-        "symfony/profiler-pack": "*",
-        "symfony/test-pack": "*"
+        "symfony/phpunit-bridge": "^5.3",
+        "symfony/stopwatch": "5.4.*",
+        "symfony/web-profiler-bundle": "5.4.*",
+        "symfony/web-server-bundle": "^4.4"
     },
     "config": {
         "allow-plugins": {
@@ -78,7 +86,9 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "UVDesk\\CommunityPackages\\Webmatic\\UVDeskSLAExtension\\": "apps/webmatic/uvdesk-sla-extension/src/",
+            "UVDesk\\CommunityPackages\\Webmatic\\UVDeskKundeExtension\\": "apps/webmatic/uvdesk-kunde-extension/src/"
         }
     },
     "autoload-dev": {
@@ -93,8 +103,15 @@
     },
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "for uvext in vendor/webmatic/uvdesk-*-extension;do ln -fsr \"$uvext\" apps/webmatic/;done": "script",
+            "composer dumpautoload": "script",
+            "rm -rf var/cache/*/": "script",
+            "cache:warmup": "symfony-cmd",
+            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
+            "uvdesk_extensions:configure-extensions": "symfony-cmd",
+            "cp vendor/webmatic/*/Migrations/Version*.php migrations": "script",
+            "cp apps/webmatic/*/src/Migrations/Version*.php migrations": "script",
+            "cp -r apps/webmatic/*/src/Resources/views/bundles templates/": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"
@@ -114,5 +131,65 @@
             "allow-contrib": false,
             "require": "^5.4"
         }
-    }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "stable",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@gitlab.webmatic.de:webmatic/bundles/doctrine-bundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@gitlab.webmatic.de:webmatic/bundles/form-bundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@gitlab.webmatic.de:webmatic/bundles/kunde-bundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@gitlab.webmatic.de:webmatic/bundles/portal-client-bundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@gitlab.webmatic.de:webmatic/bundles/user-bundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@gitlab.webmatic.de:webmatic/bundles/twig-bundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@gitlab.webmatic.de:webmatic/bundles/util-bundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:WebmaticMerseburg/automation-bundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:WebmaticMerseburg/core-framework.git"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:WebmaticMerseburg/mailbox-component.git"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:WebmaticMerseburg/SingleSignOnLibrary.git"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:WebmaticMerseburg/SingleSignOnServiceProviderBundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@gitlab.webmatic.de:webmatic/uvdesk/kunde-extension.git"
+        },
+        {
+            "type": "git",
+            "url": "git@gitlab.webmatic.de:webmatic/uvdesk/sla-extension.git"
+        }
+    ]
 }

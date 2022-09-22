@@ -1,0 +1,4 @@
+
+webmatic_portal_client:
+    idp_url: '%env(resolve:IDP_URL)%'
+    service: '%env(resolve:SERVICE_PROVIDER)%'

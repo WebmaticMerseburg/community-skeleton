@@ -1,0 +1,3 @@
+
+webmatic_portal_client:
+    resource: "@WebmaticPortalClientBundle/Resources/config/routes.yaml"
