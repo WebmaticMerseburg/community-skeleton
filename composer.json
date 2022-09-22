@@ -3,8 +3,10 @@
     "description": "UVDesk Community Helpdesk Project Skeleton",
     "type": "project",
     "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
-        "php": "^7.3 || ^8.0",
+        "php": "^7.2.5 || ^8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "composer/package-versions-deprecated": "1.11.99.3",
@@ -71,10 +73,11 @@
     },
     "config": {
         "allow-plugins": {
+            "composer/package-versions-deprecated": true,
             "symfony/flex": true,
+            "symfony/runtime": true,
             "uvdesk/composer-plugin": true
         },
-        "classmap-authoritative": true,
         "optimize-autoloader": true,
         "preferred-install": {
             "*": "dist"
@@ -94,12 +97,9 @@
         }
     },
     "replace": {
-        "paragonie/random_compat": "2.*",
         "symfony/polyfill-ctype": "*",
         "symfony/polyfill-iconv": "*",
-        "symfony/polyfill-php71": "*",
-        "symfony/polyfill-php70": "*",
-        "symfony/polyfill-php56": "*"
+        "symfony/polyfill-php72": "*"
     },
     "scripts": {
         "auto-scripts": {
@@ -124,10 +124,12 @@
         "symfony/symfony": "*"
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "1.1.x-dev"
+        },
         "symfony": {
-            "allow-contrib": true,
-            "require": "5.4.*",
-            "docker": true
+            "allow-contrib": false,
+            "require": "^5.4"
         }
     },
     "prefer-stable": true,
